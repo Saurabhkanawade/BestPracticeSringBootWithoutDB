@@ -1,4 +1,4 @@
-package com.example.employeproject.model;
+package com.example.employeproject.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

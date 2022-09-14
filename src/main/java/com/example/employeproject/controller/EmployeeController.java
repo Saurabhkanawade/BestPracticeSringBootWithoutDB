@@ -1,6 +1,6 @@
 package com.example.employeproject.controller;
 
-import com.example.employeproject.model.EmployeeEntity;
+import com.example.employeproject.entity.EmployeeEntity;
 import com.example.employeproject.model.EmployeeRequest;
 import com.example.employeproject.model.EmployeeResponse;
 import com.example.employeproject.service.EmployeeService;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Log4j2
@@ -25,15 +24,10 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-
-//    get all employees from the list
-
     @GetMapping(path = "/employees", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<EmployeeEntity>> getEmployee() {
         return new ResponseEntity<>(employeeService.getAllEmployee(), HttpStatus.OK);
     }
-
-//    get the employee by id
 
     @GetMapping(path = "/employees/{employeeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EmployeeEntity> getEmployee(@PathVariable Long employeeId) {
@@ -41,13 +35,9 @@ public class EmployeeController {
 
     }
 
-
-// create new employee into the list
-
     @PostMapping(path = "/employees", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EmployeeResponse> createEmployee(@RequestBody EmployeeRequest employeeRequest) {
         EmployeeResponse employeeResponse = employeeService.createEmployee(employeeRequest);
-//        return new ResponseEntity<>(employeeResponse, HttpStatus.CREATED);
         if (employeeResponse != null) {
             return new ResponseEntity<>(employeeResponse, HttpStatus.OK);
         } else {
@@ -55,16 +45,11 @@ public class EmployeeController {
         }
     }
 
-//  Update the employee by the id
-
     @PutMapping(path = "employees/{employeeId}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EmployeeResponse> updateEmployee(@PathVariable Long employeeId ,
                                                                     @RequestBody EmployeeRequest employeeRequest){
         return new ResponseEntity<>(employeeService.updateEmployee(employeeId,employeeRequest),HttpStatus.OK);
     }
-
-
-//    delete the employee from the list
 
     @DeleteMapping(path = "/employees/{employeeId}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long employeeId) {
